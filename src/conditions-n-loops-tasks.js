@@ -93,8 +93,13 @@ function canQueenCaptureKing(queen, king) {
  *  2, 2, 5   => false
  *  3, 0, 3   => false
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  if (!(a === b && b === c && a === c)) {
+    if (a > 0 && b > 0 && c > 0 && a < b + c && b < a + c && c < a + b) {
+      return a === b || b === c || a === c;
+    }
+  }
+  return false;
 }
 
 /**
@@ -111,8 +116,41 @@ function isIsoscelesTriangle(/* a, b, c */) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  if (num < 1 || num > 39) {
+    throw new Error(
+      'Number out of range. Please provide a number between 1 and 39.'
+    );
+  }
+
+  const romanNumerals = [
+    '',
+    'I',
+    'II',
+    'III',
+    'IV',
+    'V',
+    'VI',
+    'VII',
+    'VIII',
+    'IX',
+    'X',
+    'XX',
+    'XXX',
+    'XL',
+    'L',
+  ];
+
+  if (num < 11) {
+    return romanNumerals[num];
+  }
+  if (num < 21) {
+    return `X${romanNumerals[num % 10]}`;
+  }
+  if (num < 31) {
+    return `XX${romanNumerals[num % 10]}`;
+  }
+  return `XXX${romanNumerals[num % 10]}`;
 }
 
 /**
@@ -130,10 +168,55 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
-}
+function convertNumberToString(numberStr) {
+  const numbersToWords = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
 
+  let result = '';
+
+  for (let i = 0; i < numberStr.length; i += 1) {
+    const chr = numberStr[i];
+    const digit = parseInt(chr, 10);
+    switch (chr) {
+      case ',':
+      case '.':
+        result += `point `;
+        break;
+      case '-':
+        result += `minus `;
+        break;
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+        if (i === numberStr.length - 1) {
+          result += `${numbersToWords[digit]}`;
+        } else {
+          result += `${numbersToWords[digit]} `;
+        }
+        break;
+      default:
+        break;
+    }
+  }
+  return result;
+}
 /**
  * Determines whether a string is a palindrome.
  * In this task, the use of methods of the String and Array classes is not allowed.
@@ -146,8 +229,17 @@ function convertNumberToString(/* numberStr */) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+
+function isPalindrome(str) {
+  let obrat = '';
+  for (let i = str.length - 1; i >= 0; i -= 1) {
+    const letter = str[i];
+    obrat += letter;
+  }
+  if (str === obrat) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -164,8 +256,14 @@ function isPalindrome(/* str */) {
  *  'qwerty', 'Q'     => -1
  *  'qwerty', 'p'     => -1
  */
-function getIndexOf(/* str, letter */) {
-  throw new Error('Not implemented');
+
+function getIndexOf(str, letter) {
+  for (let i = 0; i < str.length; i += 1) {
+    if (letter === str[i]) {
+      return i;
+    }
+  }
+  return -1;
 }
 
 /**
@@ -183,8 +281,17 @@ function getIndexOf(/* str, letter */) {
  *  12345, 0    => false
  *  12345, 6    => false
  */
-function isContainNumber(/* num, digit */) {
-  throw new Error('Not implemented');
+function isContainNumber(num, digit) {
+  let tmp = num;
+  const length = Math.floor(Math.log10(num)) + 1;
+  for (let i = 0; i < length; i += 1) {
+    const digitTmp = tmp - Math.floor(tmp / 10) * 10;
+    tmp = Math.floor(tmp / 10);
+    if (digit === digitTmp) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /**
